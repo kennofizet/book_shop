@@ -7,10 +7,10 @@
             <div class="secion-detail">
                 <ul class="list-item clearfix">
                     <li>
-                        <a href="" title="">Trang chủ</a>
+                        <a href="{{route('home')}}" title="">Trang chủ</a>
                     </li>
                     <li>
-                        <a href="" title="">Blog</a>
+                        <a href="{{route('blog')}}" title="">Blog</a>
                     </li>
                 </ul>
             </div>
@@ -22,81 +22,25 @@
                 </div>
                 <div class="section-detail">
                     <ul class="list-item">
+                        @foreach($list_post as $detail_post)
                         <li class="clearfix">
-                            <a href="?page=detail_blog" title="" class="thumb fl-left">
-                                <img src="{{url('/')}}/home/images/img-post-01.jpg" alt="">
+                            <a href="{{route('blog-detail',$detail_post->slug)}}" title="" class="thumb fl-left">
+                                <img src="{{url('/')}}/upload/source/api/blog/thumbnail/{{$detail_post->file}}" alt="">
                             </a>
                             <div class="info fl-right">
-                                <a href="?page=detail_blog" title="" class="title">Mời gọi kiều bào hiến kế, chung sức xây dựng phát triển TP. Hồ Chí Minh</a>
-                                <span class="create-date">28/11/2017</span>
-                                <p class="desc">Trong ngày hôm nay (11/11) đoàn kiều bào đã tổ chức thành 4 nhóm đi tham quan các điểm như huyện Cần Giờ, Đại học Quốc gia, Khu công nghệ cao TP.HCM, Công viên phần mềm Quang Trung, Khu Nông nghiệp Công nghệ cao, Khu Đô thị mới Thủ Thiêm, Cảng Cát Lái... để kiều bào hiểu thêm về tình hình phát [...]</p>
+                                <a href="{{route('blog-detail',$detail_post->slug)}}" title="" class="title">{{$detail_post->title}}</a>
+                                <span class="create-date">{{$detail_post->created_at}}</span>
+                                <p class="desc">{!! $detail_post->title_content !!}</p>
                             </div>
                         </li>
-                        <li class="clearfix">
-                            <a href="?page=detail_blog" title="" class="thumb fl-left">
-                                <img src="{{url('/')}}/home/images/img-post-01.jpg" alt="">
-                            </a>
-                            <div class="info fl-right">
-                                <a href="?page=detail_blog" title="" class="title">Mời gọi kiều bào hiến kế, chung sức xây dựng phát triển TP. Hồ Chí Minh</a>
-                                <span class="create-date">28/11/2017</span>
-                                <p class="desc">Trong ngày hôm nay (11/11) đoàn kiều bào đã tổ chức thành 4 nhóm đi tham quan các điểm như huyện Cần Giờ, Đại học Quốc gia, Khu công nghệ cao TP.HCM, Công viên phần mềm Quang Trung, Khu Nông nghiệp Công nghệ cao, Khu Đô thị mới Thủ Thiêm, Cảng Cát Lái... để kiều bào hiểu thêm về tình hình phát [...]</p>
-                            </div>
-                        </li>
-                        <li class="clearfix">
-                            <a href="?page=detail_blog" title="" class="thumb fl-left">
-                                <img src="{{url('/')}}/home/images/img-post-01.jpg" alt="">
-                            </a>
-                            <div class="info fl-right">
-                                <a href="?page=detail_blog" title="" class="title">Mời gọi kiều bào hiến kế, chung sức xây dựng phát triển TP. Hồ Chí Minh</a>
-                                <span class="create-date">28/11/2017</span>
-                                <p class="desc">Trong ngày hôm nay (11/11) đoàn kiều bào đã tổ chức thành 4 nhóm đi tham quan các điểm như huyện Cần Giờ, Đại học Quốc gia, Khu công nghệ cao TP.HCM, Công viên phần mềm Quang Trung, Khu Nông nghiệp Công nghệ cao, Khu Đô thị mới Thủ Thiêm, Cảng Cát Lái... để kiều bào hiểu thêm về tình hình phát [...]</p>
-                            </div>
-                        </li>
-                        <li class="clearfix">
-                            <a href="?page=detail_blog" title="" class="thumb fl-left">
-                                <img src="{{url('/')}}/home/images/img-post-01.jpg" alt="">
-                            </a>
-                            <div class="info fl-right">
-                                <a href="?page=detail_blog" title="" class="title">Mời gọi kiều bào hiến kế, chung sức xây dựng phát triển TP. Hồ Chí Minh</a>
-                                <span class="create-date">28/11/2017</span>
-                                <p class="desc">Trong ngày hôm nay (11/11) đoàn kiều bào đã tổ chức thành 4 nhóm đi tham quan các điểm như huyện Cần Giờ, Đại học Quốc gia, Khu công nghệ cao TP.HCM, Công viên phần mềm Quang Trung, Khu Nông nghiệp Công nghệ cao, Khu Đô thị mới Thủ Thiêm, Cảng Cát Lái... để kiều bào hiểu thêm về tình hình phát [...]</p>
-                            </div>
-                        </li>
-                        <li class="clearfix">
-                            <a href="?page=detail_blog" title="" class="thumb fl-left">
-                                <img src="{{url('/')}}/home/images/img-post-01.jpg" alt="">
-                            </a>
-                            <div class="info fl-right">
-                                <a href="?page=detail_blog" title="" class="title">Mời gọi kiều bào hiến kế, chung sức xây dựng phát triển TP. Hồ Chí Minh</a>
-                                <span class="create-date">28/11/2017</span>
-                                <p class="desc">Trong ngày hôm nay (11/11) đoàn kiều bào đã tổ chức thành 4 nhóm đi tham quan các điểm như huyện Cần Giờ, Đại học Quốc gia, Khu công nghệ cao TP.HCM, Công viên phần mềm Quang Trung, Khu Nông nghiệp Công nghệ cao, Khu Đô thị mới Thủ Thiêm, Cảng Cát Lái... để kiều bào hiểu thêm về tình hình phát [...]</p>
-                            </div>
-                        </li>
-                        <li class="clearfix">
-                            <a href="?page=detail_blog" title="" class="thumb fl-left">
-                                <img src="{{url('/')}}/home/images/img-post-01.jpg" alt="">
-                            </a>
-                            <div class="info fl-right">
-                                <a href="?page=detail_blog" title="" class="title">Mời gọi kiều bào hiến kế, chung sức xây dựng phát triển TP. Hồ Chí Minh</a>
-                                <span class="create-date">28/11/2017</span>
-                                <p class="desc">Trong ngày hôm nay (11/11) đoàn kiều bào đã tổ chức thành 4 nhóm đi tham quan các điểm như huyện Cần Giờ, Đại học Quốc gia, Khu công nghệ cao TP.HCM, Công viên phần mềm Quang Trung, Khu Nông nghiệp Công nghệ cao, Khu Đô thị mới Thủ Thiêm, Cảng Cát Lái... để kiều bào hiểu thêm về tình hình phát [...]</p>
-                            </div>
-                        </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
             <div class="section" id="paging-wp">
                 <div class="section-detail">
                     <ul class="list-item clearfix">
-                        <li>
-                            <a href="" title="">1</a>
-                        </li>
-                        <li>
-                            <a href="" title="">2</a>
-                        </li>
-                        <li>
-                            <a href="" title="">3</a>
-                        </li>
+                        {{$list_post->links()}}
                     </ul>
                 </div>
             </div>

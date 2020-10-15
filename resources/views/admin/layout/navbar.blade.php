@@ -26,9 +26,6 @@
                 <li class="nav-item">
                     <a href="{{route('admin.blog.list')}}" title="" class="nav-link">Danh sách bài viết</a>
                 </li>
-                <li class="nav-item">
-                    <a href="{{route('admin.blog.category')}}" title="" class="nav-link">Danh mục bài viết</a>
-                </li>
             </ul>
         </li>
         <li class="nav-item">
@@ -41,13 +38,33 @@
                     <a href="{{route('admin.product.create')}}" title="" class="nav-link">Thêm mới</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('admin.blog.list')}}" title="" class="nav-link">Danh sách sản phẩm</a>
+                    <a href="{{route('admin.product.list')}}" title="" class="nav-link">Danh sách sản phẩm</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('admin.blog.category')}}" title="" class="nav-link">Danh mục sản phẩm</a>
+                    <a href="{{route('admin.product.type.list')}}" title="" class="nav-link">Chi tiết sản phẩm</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('admin.product.category')}}" title="" class="nav-link">Danh mục sản phẩm</a>
                 </li>
             </ul>
         </li>
+        <!-- <li class="nav-item">
+            <a href="#" title="" class="nav-link nav-toggle">
+                <span class="fa fa-cubes icon"></span>
+                <span class="title">Danh mục sản phẩm</span>
+            </a>
+            <ul class="sub-menu">
+                <li class="nav-item">
+                    <a href="?page=add_widget" title="" class="nav-link">Thêm mới</a>
+                </li>
+                <li class="nav-item">
+                    <a href="?page=list_widget" title="" class="nav-link">Danh sách khối</a>
+                </li>
+                <li class="nav-item">
+                    <a href="?page=menu" title="" class="nav-link">Menu</a>
+                </li>
+            </ul>
+        </li> -->
         <li class="nav-item">
             <a href="" title="" class="nav-link nav-toggle">
                 <span class="fa fa-database icon"></span>
@@ -64,43 +81,12 @@
         </li>
         <li class="nav-item">
             <a href="#" title="" class="nav-link nav-toggle">
-                <span class="fa fa-cubes icon"></span>
-                <span class="title">Khối giao diện</span>
-            </a>
-            <ul class="sub-menu">
-                <li class="nav-item">
-                    <a href="?page=add_widget" title="" class="nav-link">Thêm mới</a>
-                </li>
-                <li class="nav-item">
-                    <a href="?page=list_widget" title="" class="nav-link">Danh sách khối</a>
-                </li>
-                <li class="nav-item">
-                    <a href="?page=menu" title="" class="nav-link">Menu</a>
-                </li>
-            </ul>
-        </li>
-        <li class="nav-item">
-            <a href="#" title="" class="nav-link nav-toggle">
-                <i class="fa fa-sliders" aria-hidden="true"></i>
-                <span class="title">Slider</span>
-            </a>
-            <ul class="sub-menu">
-                <li class="nav-item">
-                    <a href="?page=add_slider" title="" class="nav-link">Thêm mới</a>
-                </li>
-                <li class="nav-item">
-                    <a href="?page=list_slider" title="" class="nav-link">Danh sách slider</a>
-                </li>
-            </ul>
-        </li>
-        <li class="nav-item">
-            <a href="#" title="" class="nav-link nav-toggle">
                 <i class="fa fa-file-image-o" aria-hidden="true"></i>
-                <span class="title">Media</span>
+                <span class="title">Giao Diện</span>
             </a>
             <ul class="sub-menu">
                 <li class="nav-item">
-                    <a href="?page=list_media" title="" class="nav-link">Danh sách media</a>
+                    <a href="{{route('admin.setting.template.login')}}" title="Setting Page Login" class="nav-link">Login page</a>
                 </li>
             </ul>
         </li>

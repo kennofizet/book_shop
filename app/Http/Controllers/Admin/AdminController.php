@@ -12,5 +12,9 @@ class AdminController extends Controller
     {
         return redirect(route('admin.product.list'));
     }
+    public function notFound()
+    {
+    	return view('admin.404');
+    }
    
 }

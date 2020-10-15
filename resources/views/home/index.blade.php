@@ -305,52 +305,47 @@
                 </div>
                 <div class="secion-detail">
                     <ul class="list-item">
+                        @foreach($list_category as $detail_category)
                         <li>
-                            <a href="?page=category_product" title="">Điện thoại</a>
-                            <ul class="sub-menu">
-                                <li>
-                                    <a href="?page=category_product" title="">Iphone</a>
-                                </li>
-                                <li>
-                                    <a href="?page=category_product" title="">Samsung</a>
-                                    <ul class="sub-menu">
-                                        <li>
-                                            <a href="?page=category_product" title="">Iphone X</a>
-                                        </li>
-                                        <li>
-                                            <a href="?page=category_product" title="">Iphone 8</a>
-                                        </li>
-                                        <li>
-                                            <a href="?page=category_product" title="">Iphone 8 Plus</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="?page=category_product" title="">Oppo</a>
-                                </li>
-                                <li>
-                                    <a href="?page=category_product" title="">Bphone</a>
-                                </li>
-                            </ul>
+                            <a href="?page=category_product" title="">{{$detail_category->title}}</a>
+                            @if($detail_category->Child->first())
+                                <ul class="sub-menu">
+                                    @foreach($detail_category->Child as $category_child_1)
+                                    <li>
+                                        <a href="?page=category_product" title="">{{$category_child_1->title}}</a>
+                                        @if($category_child_1->Child->first())
+                                            <ul class="sub-menu">
+                                                @foreach($category_child_1->Child as $category_child_2)
+                                                <li>
+                                                    <a href="?page=category_product" title="">{{$category_child_2->title}}</a>
+                                                    @if($category_child_2->Child->first())
+                                                        <ul class="sub-menu">
+                                                            @foreach($category_child_2->Child as $category_child_3)
+                                                            <li>
+                                                                <a href="?page=category_product" title="">{{$category_child_3->title}}</a>
+                                                                @if($category_child_3->Child->first())
+                                                                    <ul class="sub-menu">
+                                                                        @foreach($category_child_3->Child as $category_child_4)
+                                                                        <li>
+                                                                            <a href="?page=category_product" title="">{{$category_child_4->title}}</a>
+                                                                        </li>
+                                                                        @endforeach
+                                                                    </ul>
+                                                                @endif
+                                                            </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    @endif
+                                                </li>
+                                                @endforeach
+                                            </ul>
+                                        @endif
+                                    </li>
+                                    @endforeach
+                                </ul>
+                            @endif
                         </li>
-                        <li>
-                            <a href="?page=category_product" title="">Máy tính bảng</a>
-                        </li>
-                        <li>
-                            <a href="?page=category_product" title="">laptop</a>
-                        </li>
-                        <li>
-                            <a href="?page=category_product" title="">Tai nghe</a>
-                        </li>
-                        <li>
-                            <a href="?page=category_product" title="">Thời trang</a>
-                        </li>
-                        <li>
-                            <a href="?page=category_product" title="">Đồ gia dụng</a>
-                        </li>
-                        <li>
-                            <a href="?page=category_product" title="">Thiết bị văn phòng</a>
-                        </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>

@@ -1,5 +1,11 @@
 @extends('home.layout.main')
-
+@section('style')
+<style type="text/css">
+    .color-red{
+        color: red;
+    }
+</style>
+@endsection
 @section('content')
 <div id="main-content-wp" class="clearfix detail-blog-page">
     <div class="wp-inner">
@@ -7,10 +13,13 @@
             <div class="secion-detail">
                 <ul class="list-item clearfix">
                     <li>
-                        <a href="" title="">Trang chủ</a>
+                        <a href="{{route('home')}}" title="">Trang chủ</a>
                     </li>
                     <li>
-                        <a href="" title="">Blog</a>
+                        <a href="{{route('blog')}}" title="">Blog</a>
+                    </li>
+                    <li>
+                        <a href="{{route('blog-detail',$post_detail->slug)}}" title="">{{$post_detail->slug}}</a>
                     </li>
                 </ul>
             </div>
@@ -18,31 +27,59 @@
         <div class="main-content fl-right">
             <div class="section" id="detail-blog-wp">
                 <div class="section-head clearfix">
-                    <h3 class="section-title">Doanh nghiệp EU tìm kiếm cơ hội hợp tác đầu tư công nghệ xanh tại Việt Nam</h3>
+                    <h3 class="section-title">{{$post_detail->title}}</h3>
                 </div>
                 <div class="section-detail">
-                    <span class="create-date">28/11/2017</span>
+                    <span class="create-date">{{$post_detail->title}}</span>
                     <div class="detail">
-                        <p><strong>Elon Musk nghĩ rằng các công ty lưới điện không có gì phải lo sợ các hệ thống mái ngói năng lượng mặt trời. Nhiều báo cáo cho rằng đang có một “cuộc chiến” giữa các công ty năng lượng mặt trời và các công ty lưới điện tại Hoa Kỳ, xoay quanh một số vấn đề quan trọng.</strong></p>
-                        <p>Một trong số đó là nhiều tiểu bang có luật “mua lại điện” đỏi hỏi các công ty lưới điện phải mua lại lượng điện dư thừa mà khách hàng tạo ra bởi năng lượng mặt trời. Cũng có những lo ngại rằng người ta có thể dùng ngói năng lượng mặt trời tự sản xuất điện năng lượng mặt trời độc lập với lưới – và như vậy sẽ giảm số người phụ thuộc vào lưới điện và chuyển các chi phí điện lưới đó cho những người không dùng điện năng lượng mặt trời.</p>
-                        <p>Phát biểu tại buổi ra mắt sản phẩm mái ngói năng lượng mặt trời và hệ thống pin dự trữ mới của Tesla và SolarCity vào thứ Sáu vừa rồi, Musk, người vừa là chủ tịch của cả hai công ty vừa là CEO của Tesla, nói về lý do tại sao tầm nhìn của ông ấy về điện năng lượng mặt trời tại Mỹ sâu xa hơn sẽ có nhiều việc cho các công lưới điện chứ không phải ít hơn</p>
+                        <p><strong>{!! $post_detail->title_content !!}</strong></p>
+                        
                         <p style="text-align: center;">
-                            <img src="{{url('/')}}/home/images/img-detail.jpg" alt="">
+                            <img src="{{url('/')}}/upload/source/api/blog/images/{{$post_detail->file}}" alt="">
                         </p>
-                        <p>Một trong số đó là nhiều tiểu bang có luật “mua lại điện” đỏi hỏi các công ty lưới điện phải mua lại lượng điện dư thừa mà khách hàng tạo ra bởi năng lượng mặt trời. Cũng có những lo ngại rằng người ta có thể dùng ngói năng lượng mặt trời tự sản xuất điện năng lượng mặt trời độc lập với lưới – và như vậy sẽ giảm số người phụ thuộc vào lưới điện và chuyển các chi phí điện lưới đó cho những người không dùng điện năng lượng mặt trời. Phát biểu tại buổi ra mắt sản phẩm mái ngói năng lượng mặt trời và hệ thống pin dự trữ mới của Tesla và SolarCity vào thứ Sáu vừa rồi, Musk, người vừa là chủ tịch của cả hai công ty vừa là CEO của Tesla, nói về lý do tại sao tầm nhìn của ông ấy về điện năng lượng mặt trời tại Mỹ sâu xa hơn sẽ có nhiều việc cho các công lưới điện chứ không phải ít hơn.</p>
-                        <p>Một trong số đó là nhiều tiểu bang có luật “mua lại điện” đỏi hỏi các công ty lưới điện phải mua lại lượng điện dư thừa mà khách hàng tạo ra bởi năng lượng mặt trời. Cũng có những lo ngại rằng người ta có thể dùng ngói năng lượng mặt trời tự sản xuất điện năng lượng mặt trời độc lập với lưới – và như vậy sẽ giảm số người phụ thuộc vào lưới điện và chuyển các chi phí điện lưới đó cho những người không dùng điện năng lượng mặt trời.</p>
-                        <p>Một trong số đó là nhiều tiểu bang có luật “mua lại điện” đỏi hỏi các công ty lưới điện phải mua lại lượng điện dư thừa mà khách hàng tạo ra bởi năng lượng mặt trời. Cũng có những lo ngại rằng người ta có thể dùng ngói năng lượng mặt trời tự sản xuất điện năng lượng mặt trời độc lập với lưới – và như vậy sẽ giảm số người phụ thuộc vào lưới điện và chuyển các chi phí điện lưới đó cho những người không dùng điện năng lượng mặt trời. Phát biểu tại buổi ra mắt sản phẩm mái ngói năng lượng mặt trời và hệ thống pin dự trữ mới của Tesla và SolarCity vào thứ Sáu vừa rồi, Musk, người vừa là chủ tịch của cả hai công ty vừa là CEO của Tesla, nói về lý do tại sao tầm nhìn của ông ấy về điện năng lượng mặt trời tại Mỹ sâu xa hơn sẽ có nhiều việc cho các công lưới điện chứ không phải ít hơn.</p>
-                        <p>Một trong số đó là nhiều tiểu bang có luật “mua lại điện” đỏi hỏi các công ty lưới điện phải mua lại lượng điện dư thừa mà khách hàng tạo ra bởi năng lượng mặt trời. Cũng có những lo ngại rằng người ta có thể dùng ngói năng lượng mặt trời tự sản xuất điện năng lượng mặt trời độc lập với lưới – và như vậy sẽ giảm số người phụ thuộc vào lưới điện và chuyển các chi phí điện lưới đó cho những người không dùng điện năng lượng mặt trời.</p>
+                        <p>{!! $post_detail->content !!}</p>
                     </div>
                 </div>
             </div>
             <div class="section" id="social-wp">
                 <div class="section-detail">
-                    <div class="fb-like" data-href="" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
-                    <div class="g-plusone-wp">
-                        <div class="g-plusone" data-size="medium"></div>
+                    <div class="post-meta">
+                        <div class="meta-share">
+                            <span class="share-text">Like
+                            </span>
+                            <i class="like-post-{{$post_detail->slug}} fa fa-heart like-post
+                            @if(Auth::user())
+                                @if(Auth::user()->CheckLike($post_detail->id))
+                                    color-red
+                                @endif
+                            @endif
+                            " data-post="{{$post_detail->slug}}" style="cursor: pointer;">
+                            @if($post_detail->countLikePost)
+                            {{$post_detail->countLikePost->count}}
+                            @else
+                            0
+                            @endif
+                            </i>
+                            <span class="share-text">Share
+                            </span>
+                            <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{route('blog-detail',$post_detail->slug)}}">
+                                <i class="fa fa-facebook">
+                                </i>
+                            </a>
+                            <a target="_blank" href="https://twitter.com/intent/tweet?text=Check%20out%20this%20article:%20{{$post_detail->title}}&amp;url={{route('blog-detail',$post_detail->slug)}}">
+                                <i class="fa fa-twitter">
+                                </i>
+                            </a>
+                            <a data-pin-do="none" target="_blank" href="https://pinterest.com/pin/create/button/?url={{route('blog-detail',$post_detail->slug)}}&amp;media={{url('/')}}/upload/iloveyou/api/gallery/blog/post/images/{{$post_detail->file}}&amp;description={{$post_detail->title}}">
+                                <i class="fa fa-pinterest">
+                                </i>
+                            </a>
+                            <a target="_blank" href="https://plus.google.com/share?url={{route('blog-detail',$post_detail->slug)}}">
+                                <i class="fa fa-google-plus">
+                                </i>
+                            </a>
+                        </div>
                     </div>
-                    <div class="fb-comments" id="fb-comment" data-href="" data-numposts="5"></div>
                 </div>
             </div>
         </div>
@@ -170,4 +207,33 @@
         </div>
     </div>
 </div>
+@endsection
+@section('script')
+<script type="text/javascript">
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+</script>
+<script type="text/javascript">
+    $('.like-post').on('click',function (e) {
+        var post = $(this).attr('data-post');
+        e.preventDefault();
+        $.ajax({
+            url:"{{ route('source.api.user.blog.like-post') }}",
+            method:"POST",
+            data:{post:post},
+            success:function(data){
+                if (data.message === "like") {
+                    $('.like-post-'+data.slug).addClass('color-red');
+                    $('.like-post-'+data.slug).html(data.like);
+                }else if(data.message === "un-like"){
+                    $('.like-post-'+data.slug).removeClass('color-red');
+                    $('.like-post-'+data.slug).html(data.like);
+                }else{}
+            }
+          });
+    });
+</script>
 @endsection

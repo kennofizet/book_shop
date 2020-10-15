@@ -4,10 +4,7 @@ $(document).ready(function () {
     $('#content').css('min-height', height);
 
 //  CHECK ALL
-    $('input[name="checkAll"]').click(function () {
-        var status = $(this).prop('checked');
-        $('.list-table-wp tbody tr td input[type="checkbox"]').prop("checked", status);
-    });
+    
 
 // EVENT SIDEBAR MENU
     $('#sidebar-menu .nav-item .nav-link .title').after('<span class="fa fa-angle-right arrow"></span>');

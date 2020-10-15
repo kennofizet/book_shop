@@ -3,6 +3,7 @@
     <head>
         <title>ISMART STORE</title>
         <meta charset="UTF-8">
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="{{url('/')}}/home/css/bootstrap/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
         <link href="{{url('/')}}/home/css/bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css"/>
@@ -33,6 +34,7 @@
         <script src="{{url('/')}}/home/js/carousel/owl.carousel.js" type="text/javascript"></script>
         <script src="{{url('/')}}/home/js/main.js" type="text/javascript"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.pjax/2.0.1/jquery.pjax.min.js"></script>
+        
         <script type="text/javascript">
           $(function(){
         // pjax
@@ -46,6 +48,11 @@
           }
 
           });
+            function clearText(field){
+                if (field.defaultValue == field.value) field.value = '';
+                else if (field.value == '') field.value = field.defaultValue;
+
+            }
         </script>
     </head>
     <body>

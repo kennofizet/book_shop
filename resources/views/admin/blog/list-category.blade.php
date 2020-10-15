@@ -171,6 +171,60 @@
 @endsection
 @section('script')
 <script type="text/javascript">
-    body_script("{{url('/')}}/admin/js/main.js");
+function loadScripts(scripts) {
+    var deferred = jQuery.Deferred();
+
+    function loadScript(i) {
+      if (i < scripts.length) {
+        jQuery.ajax({
+          url: scripts[i],
+          dataType: "script",
+          cache: true,
+          success: function() {
+            loadScript(i + 1);
+          }
+        });
+      } else {
+        deferred.resolve();
+      }
+    }
+    loadScript(0);
+
+    return deferred;
+  }
+
+  var d1 = loadScripts([
+    // "{{url('/')}}/admin-default/js/cropper/cropper.min.js",
+    // "{{url('/')}}/admin-default/fix/pages/iloveyou/blog/crop-image-post.js",
+  ]).done(function() {
+    console.log("All scripts loaded1");
+
+  });
+
+    // queue #2 - jquery cycle2 plugin and tile effect plugin
+    var d2 = loadScripts([
+    ]).done(function() {
+        console.log("All scripts loaded2");
+        $('input[name="checkAll"]').click(function () {
+            var status = $(this).prop('checked');
+            $('.list-table-wp tbody tr td input[type="checkbox"]').prop("checked", status);
+            $('.list-table-wp tbody tr td input[type="checkbox"]').addClass("setting-login-table-checked");
+        });
+        $('input[name="checkItem"]').click(function () {
+            $(this).toggleClass("setting-login-table-checked");
+        });
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    });
+
+    // trigger a callback when all queues are complete
+    jQuery.when(d1, d2).done(function() {
+      console.log("All scripts loaded");
+      body_script("{{url('/')}}/admin/js/main.js");
+    });
+    
 </script>
 @endsection

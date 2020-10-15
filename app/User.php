@@ -5,11 +5,13 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, Sluggable;
 
+    protected $connection = 'mysql';
     /**
      * The attributes that are mass assignable.
      *
@@ -36,4 +38,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function sluggable()
+    {
+        return [
+            'link' => [
+                'source' => 'name'
+            ]
+        ];
+    }
+    public function CheckLike($id_post)
+    {
+        return $this->belongsTo('App\BlogPostLikeableLike','id','id_user')->where('type',1)->where('id_post',$id_post)->first();
+    }
 }

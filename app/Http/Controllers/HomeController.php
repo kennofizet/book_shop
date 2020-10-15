@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Category;
 
 class HomeController extends Controller
 {
 
     public function index()
     {
+        $list_category = Category::where('status','<>',0)->where('parent',0)->get();
         return view('home.index',[
-            'test_category' => "abc"
+            'list_category' => $list_category
         ]);
     }
 

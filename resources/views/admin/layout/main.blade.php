@@ -3,6 +3,7 @@
     <div class="wrap clearfix">
         @include('admin.layout.navbar')
 		<div id="content-load">
+			@yield('style')
 			@yield('content')
 			@yield('script')
 		</div>
