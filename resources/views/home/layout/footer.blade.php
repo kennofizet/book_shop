@@ -2,8 +2,8 @@
     <div id="foot-body">
         <div class="wp-inner clearfix">
             <div class="block" id="info-company">
-                <h3 class="title">ISMART</h3>
-                <p class="desc">ISMART luôn cung cấp luôn là sản phẩm chính hãng có thông tin rõ ràng, chính sách ưu đãi cực lớn cho khách hàng có thẻ thành viên.</p>
+                <h3 class="title">@if($infor_web->name){{$infor_web->name}} @else Chưa có thông tin @endif</h3>
+                <p class="desc">@if($infor_web->name){{$infor_web->name}} @else Chưa có thông tin @endif luôn cung cấp luôn là sản phẩm chính hãng có thông tin rõ ràng, chính sách ưu đãi cực lớn cho khách hàng có thẻ thành viên.</p>
                 <div id="payment">
                     <div class="thumb">
                         <img src="{{url('/')}}/home/images/img-foot.png" alt="">
@@ -14,13 +14,13 @@
                 <h3 class="title">Thông tin cửa hàng</h3>
                 <ul class="list-item">
                     <li>
-                        <p>106 - Trần Bình - Cầu Giấy - Hà Nội</p>
+                        <p>@if($infor_web->address){{$infor_web->address}} @else Chưa có thông tin @endif</p>
                     </li>
                     <li>
-                        <p>0987.654.321 - 0989.989.989</p>
+                        <p>@if($infor_web->phone){{$infor_web->phone}} @else Chưa có thông tin @endif</p>
                     </li>
                     <li>
-                        <p>vshop@gmail.com</p>
+                        <p>@if($infor_web->email){{$infor_web->email}} @else Chưa có thông tin @endif</p>
                     </li>
                 </ul>
             </div>
@@ -60,8 +60,9 @@
     </div>
 </div>
 </div>
+</div>
 <div id="menu-respon">
-    <a href="?page=home" title="" class="logo">VSHOP</a>
+    <a href="?page=home" title="" class="logo">@if($infor_web->name){{$infor_web->name}} @else Chưa có thông tin @endif</a>
     <div id="menu-respon-wp">
         <ul class="" id="main-menu-respon">
             <li>
@@ -109,6 +110,7 @@
 </div>
 <div id="btn-top"><img src="{{url('/')}}/home/images/icon-to-top.png" alt=""/></div>
 <div id="fb-root"></div>
+<a href="{{route('cart')}}" id="link-redirect-to-cart"></a>
 <script>(function (d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id))
@@ -119,5 +121,78 @@
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
 </script>
+<script type="text/javascript">
+    $('#btn-cart').on('click',function () {
+        $('#link-redirect-to-cart').click();
+    });
+</script>
+<script type="text/javascript">
+function loadScripts(scripts) {
+var deferred = jQuery.Deferred();
+
+function loadScript(i) {
+  if (i < scripts.length) {
+    jQuery.ajax({
+      url: scripts[i],
+      dataType: "script",
+      cache: true,
+      success: function() {
+        loadScript(i + 1);
+      }
+    });
+  } else {
+    deferred.resolve();
+  }
+}
+loadScript(0);
+
+return deferred;
+}
+
+  var d1 = loadScripts([
+    // "{{url('/')}}/home/js/main.js"
+  ]).done(function() {
+    console.log("All scripts loaded1");
+
+  });
+
+    // queue #2 - jquery cycle2 plugin and tile effect plugin
+    var d2 = loadScripts([
+    ]).done(function() {
+        console.log("All scripts loaded2");
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    });
+
+    // trigger a callback when all queues are complete
+    jQuery.when(d1, d2).done(function() {
+      console.log("All scripts loaded");
+
+    });
+    
+</script>
+<script type="text/javascript">
+    function loadCountCart() {
+        $.ajax({
+          url:"{{ route('source.api.user.cart.count-item-cart') }}",
+          method:"POST",
+          success:function(data){
+            $('.number-cart-count').html(data.count_item);
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Add!',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }
+        });
+    }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.6.1/sweetalert2.all.js"></script>
+
 </body>
 </html>

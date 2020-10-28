@@ -104,8 +104,8 @@
             <div id="container">
                 <div id="header-wp">
                     <div class="wp-inner clearfix">
-                        <a href="?page=list_post" title="" id="logo" class="fl-left">ADMIN</a>
-                        <ul id="main-menu" class="fl-left">
+                        <a href="{{route('admin.home')}}" title="" id="logo" class="fl-left">ADMIN</a>
+                        <!-- <ul id="main-menu" class="fl-left">
                             <li>
                                 <a href="?page=list_post" title="">Trang</a>
                                 <ul class="sub-menu">
@@ -159,16 +159,16 @@
                             <li>
                                 <a href="?page=menu" title="">Menu</a>
                             </li>
-                        </ul>
+                        </ul> -->
                         <div id="dropdown-user" class="dropdown dropdown-extended fl-right">
                             <button class="dropdown-toggle clearfix" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                <div id="thumb-circle" class="fl-left">
-                                    <img src="{{url('/')}}/admin//images/img-admin.png">
+                                <div id="thumb-circle" class="fl-left" style="background: none!important">
+                                    <img src="{{url('/')}}/admin//images/img-admin.png" style="padding-top: 5px">
                                 </div>
-                                <h3 id="account" class="fl-right">Admin</h3>
+                                <h3 id="account" style="padding: 0px 0px !important" class="fl-right">Admin</h3>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a href="?page=info_account" title="Thông tin cá nhân">Thông tin tài khoản</a></li>
+                                <li><a href="{{route('admin.my-account.info')}}" title="Thông tin cá nhân">Thông tin tài khoản</a></li>
                                 <li><a href="{{route('logout')}}" title="Thoát">Thoát</a></li>
                             </ul>
                         </div>

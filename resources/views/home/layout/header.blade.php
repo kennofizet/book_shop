@@ -23,7 +23,8 @@
         <link href="{{url('/')}}/home/css/import/detail_blog.css" rel="stylesheet" type="text/css"/>
         <link href="{{url('/')}}/home/css/import/cart.css" rel="stylesheet" type="text/css"/>
         <link href="{{url('/')}}/home/css/import/checkout.css" rel="stylesheet" type="text/css"/>
-
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.6.1/sweetalert2.min.js">
 
         <link href="{{url('/')}}/home/responsive.css" rel="stylesheet" type="text/css"/>
 
@@ -32,7 +33,7 @@
         <!-- costume -->
         <script src="{{url('/')}}/home/js/elevatezoom-master/jquery.elevatezoom.js" type="text/javascript"></script>
         <script src="{{url('/')}}/home/js/carousel/owl.carousel.js" type="text/javascript"></script>
-        <script src="{{url('/')}}/home/js/main.js" type="text/javascript"></script>
+        <!-- <script src="{{url('/')}}/home/js/main.js" type="text/javascript"></script> -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.pjax/2.0.1/jquery.pjax.min.js"></script>
         
         <script type="text/javascript">
@@ -45,6 +46,7 @@
         // does current browser support PJAX
           if ($.support.pjax) {
           $.pjax.defaults.timeout = 2000; // time in milliseconds
+          $.pjax.defaults.scrollTo = false;
           }
 
           });
@@ -56,6 +58,7 @@
         </script>
     </head>
     <body>
+        <a href="" id="link-search"></a>
         <div id="site">
             <div id="container">
                 <div id="header-wp">
@@ -69,27 +72,25 @@
                         <div class="wp-inner">
                             <a href="?page=home" title="" id="logo" class="fl-left"><img src="{{url('/')}}/home/images/logo.png"/></a>
                             <div id="search-wp" class="fl-left">
-                                <form method="POST" action="">
-                                    <input type="text" name="s" id="s" placeholder="Nhập từ khóa tìm kiếm tại đây!">
+                                    <input type="text" name="key" class="key_search_home" id="s" placeholder="Nhập từ khóa tìm kiếm tại đây!">
                                     <button type="submit" id="sm-s">Tìm kiếm</button>
-                                </form>
                             </div>
                             <div id="action-wp" class="fl-right">
                                 <div id="advisory-wp" class="fl-left">
                                     <span class="title">Tư vấn</span>
-                                    <span class="phone">0987.654.321</span>
+                                    <span class="phone">@if($infor_web->phone){{$infor_web->phone}} @else Chưa có thông tin @endif</span>
                                 </div>
                                 <div id="btn-respon" class="fl-right"><i class="fa fa-bars" aria-hidden="true"></i></div>
-                                <a href="?page=cart" title="giỏ hàng" id="cart-respon-wp" class="fl-right">
+                                <a href="{{route('cart')}}" title="giỏ hàng" id="cart-respon-wp" class="fl-right">
                                     <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                    <span id="num">2</span>
+                                    <span id="num" class="number-cart-count">{{$count_item}}</span>
                                 </a>
                                 <div id="cart-wp" class="fl-right">
                                     <div id="btn-cart">
                                         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                        <span id="num">2</span>
+                                        <span id="num" class="number-cart-count">{{$count_item}}</span>
                                     </div>
-                                    <div id="dropdown">
+                                    <!-- <div id="dropdown">
                                         <p class="desc">Có <span>2 sản phẩm</span> trong giỏ hàng</p>
                                         <ul class="list-cart">
                                             <li class="clearfix">
@@ -118,10 +119,10 @@
                                             <p class="price fl-right">18.500.000đ</p>
                                         </div>
                                         <dic class="action-cart clearfix">
-                                            <a href="?page=cart" title="Giỏ hàng" class="view-cart fl-left">Giỏ hàng</a>
+                                            <a href="{{route('cart')}}" title="Giỏ hàng" class="view-cart fl-left">Giỏ hàng</a>
                                             <a href="?page=checkout" title="Thanh toán" class="checkout fl-right">Thanh toán</a>
                                         </dic>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>

@@ -1,7 +1,7 @@
 /*MAIN CONTENT*/
 #main-content-wp{ background: #f7f7f7; padding-top: 25px; padding-bottom: 75px;}
-.main-content{ width: 75%; margin-left: 2%; }
-.sidebar{ width: 23%;}
+.main-content{ width: 75%; margin-left: 2%; min-height: 400px;}
+.sidebar{ width: 20%;z-index: 1000000;position: absolute;}
 #slider-wp .item img{ width: 100%!important}
 #category-product-wp{ border: 1px solid #ececec;}
 #selling-wp, #banner-wp, #filter-product-wp{ border: 1px solid #ececec; margin-top: 25px;}
@@ -129,7 +129,7 @@
     color: #999;
     text-decoration: line-through;
 }
-#feature-product-wp .list-item li .action a, #list-product-wp .list-item li .action a, #same-category-wp .list-item li .action a{
+#feature-product-wp .list-item li .action a, #list-product-wp .list-item li .action a, #list-product-wp .list-item li .action span, #same-category-wp .list-item li .action a{
     display: block;
 
     padding: 2px 10px;

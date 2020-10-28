@@ -7,10 +7,10 @@
             <div class="section-detail">
                 <ul class="list-item clearfix">
                     <li>
-                        <a href="?page=home" title="">Trang chủ</a>
+                        <a href="{{route('home')}}" title="">Trang chủ</a>
                     </li>
                     <li>
-                        <a href="" title="">Sản phẩm làm đẹp da</a>
+                        <a href="{{route('cart')}}" title="">Giỏ Hàng</a>
                     </li>
                 </ul>
             </div>
@@ -31,50 +31,37 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @if($cart_list)
+                        @foreach($cart_list as $detail_product)
                         <tr>
-                            <td>HCA00031</td>
+                            <td>{{$detail_product["item"]->type}}</td>
                             <td>
-                                <a href="" title="" class="thumb">
-                                    <img src="{{url('/')}}/home/images/img-pro-11.png" alt="">
+                                <a href="{{route('product-detail',$detail_product['item']->slug)}}" title="" class="thumb">
+                                    <img src="{{url('/')}}/upload/source/api/product/thumbnail/{{$detail_product['item']->image}}" alt="">
                                 </a>
                             </td>
                             <td>
-                                <a href="" title="" class="name-product">Sony Express X6</a>
+                                <a href="{{route('product-detail',$detail_product['item']->slug)}}" title="" class="name-product">{{$detail_product["item"]->name}}</a>
                             </td>
-                            <td>500.000đ</td>
+                            <td>@if($detail_product["item"]->sale_price) {{$detail_product["item"]->sale_price}} @else {{$detail_product["item"]->price}} @endif</td>
                             <td>
-                                <input type="text" name="num-order" value="1" class="num-order">
+                                <input type="text" name="num-order" data-id="{{$detail_product['item']->id}}" value="{{$detail_product['qty']}}" class="num-order cart-update-num-order">
                             </td>
-                            <td>500.000đ</td>
+                            <td>{{$detail_product["price"]}}</td>
                             <td>
-                                <a href="" title="" class="del-product"><i class="fa fa-trash-o"></i></a>
+                                <span title="" data-id="{{$detail_product['item']->id}}" class="del-product" ><i class="fa fa-trash-o"></i></span>
                             </td>
                         </tr>
-                        <tr>
-                            <td>HCA00032</td>
-                            <td>
-                                <a href="" title="" class="thumb">
-                                    <img src="{{url('/')}}/home/images/img-pro-23.png" alt="">
-                                </a>
-                            </td>
-                            <td>
-                                <a href="" title="" class="name-product">Laptop Probook HP 4430s</a>
-                            </td>
-                            <td>350.000đ</td>
-                            <td>
-                                <input type="text" name="num-order" value="1" class="num-order">
-                            </td>
-                            <td>350.000đ</td>
-                            <td>
-                                <a href="" title="" class="del-product"><i class="fa fa-trash-o"></i></a>
-                            </td>
-                        </tr>
+                        @endforeach
+                        @else
+                        <h1 style="color: red">Bạn chưa có sản phẩm nào trong giỏ hàng</h1>
+                        @endif
                     </tbody>
                     <tfoot>
                         <tr>
                             <td colspan="7">
                                 <div class="clearfix">
-                                    <p id="total-price" class="fl-right">Tổng giá: <span>850.000đ</span></p>
+                                    <p id="total-price" class="fl-right">Tổng giá: <span>{{$total_price}} vnđ</span></p>
                                 </div>
                             </td>
                         </tr>
@@ -82,8 +69,8 @@
                             <td colspan="7">
                                 <div class="clearfix">
                                     <div class="fl-right">
-                                        <a href="" title="" id="update-cart">Cập nhật giỏ hàng</a>
-                                        <a href="?page=checkout" title="" id="checkout-cart">Thanh toán</a>
+                                        <a href="{{route('cart')}}" title="" id="update-cart">Load lại</a>
+                                        <a href="{{route('cart-check-out')}}" title="" id="checkout-cart">Thanh toán</a>
                                     </div>
                                 </div>
                             </td>
@@ -94,11 +81,106 @@
         </div>
         <div class="section" id="action-cart-wp">
             <div class="section-detail">
-                <p class="title">Click vào <span>“Cập nhật giỏ hàng”</span> để cập nhật số lượng. Nhập vào số lượng <span>0</span> để xóa sản phẩm khỏi giỏ hàng. Nhấn vào thanh toán để hoàn tất mua hàng.</p>
-                <a href="?page=home" title="" id="buy-more">Mua tiếp</a><br/>
-                <a href="" title="" id="delete-cart">Xóa giỏ hàng</a>
+                <p class="title">Nhập số liệu trực tiếp vào ô trong cột số lượng</p>
             </div>
         </div>
     </div>
 </div>
+<a href="{{route('cart')}}" id="link-redirect"></a>
+@endsection
+@section('script')
+<script type="text/javascript">
+function loadScripts(scripts) {
+var deferred = jQuery.Deferred();
+
+function loadScript(i) {
+  if (i < scripts.length) {
+    jQuery.ajax({
+      url: scripts[i],
+      dataType: "script",
+      cache: true,
+      success: function() {
+        loadScript(i + 1);
+      }
+    });
+  } else {
+    deferred.resolve();
+  }
+}
+loadScript(0);
+
+return deferred;
+}
+
+  var d1 = loadScripts([
+    // "{{url('/')}}/home/js/main.js"
+  ]).done(function() {
+    console.log("All scripts loaded1");
+
+  });
+
+    // queue #2 - jquery cycle2 plugin and tile effect plugin
+    var d2 = loadScripts([
+    ]).done(function() {
+        console.log("All scripts loaded2");
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    });
+
+    // trigger a callback when all queues are complete
+    jQuery.when(d1, d2).done(function() {
+      console.log("All scripts loaded");
+
+    });
+    
+</script>
+<script type="text/javascript">
+    $('.cart-update-num-order').on('change',function () {
+        var number = $(this).val();
+        var id = $(this).attr('data-id');
+        $.ajax({
+          url:"{{ route('source.api.user.cart.update-to-cart-single') }}",
+          method:"POST",
+          data:{id:id,number:number},
+          success:function(data){
+            if (data.message == "fail") {
+            }else if(data.message == "success"){
+                loadCountCart();
+                $('#link-redirect').click();
+            }else if(data.message == "qty"){
+                $('#link-redirect').click();
+            }else{}
+          }
+        });
+    });
+    $('.del-product').on('click',function (e) {
+        var id = $(this).attr('data-id');
+        $.ajax({
+          url:"{{ route('source.api.user.cart.delete-cart-item') }}",
+          method:"POST",
+          data:{id:id},
+          success:function(data){
+            if (data.message == "fail") {
+            }else if(data.message == "success"){
+                loadCountCart();
+                $('#link-redirect').click();
+            }else{}
+          }
+        });
+    });
+</script>
+<script type="text/javascript">
+    $('.zoomContainer').css('display','none');
+</script>
+<script type="text/javascript">
+  $('.key_search_home').on('keyup',function (e) {
+    if ($(this).val()) {
+        $('#link-search').attr('href',"{{url('/')}}/search/"+$(this).val());
+        $('#link-search').click();
+    }
+  });
+</script>
 @endsection

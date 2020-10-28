@@ -5,11 +5,14 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Cviebrock\EloquentSluggable\Sluggable;
+use ShiftOneLabs\LaravelCascadeDeletes\CascadesDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Category extends Authenticatable
 {
-    use Notifiable,Sluggable;
+    use Notifiable,Sluggable,CascadesDeletes;
+
+    protected $cascadeDeletes = ['Child','Product'];
 
     protected $table = "category";
 

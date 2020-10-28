@@ -12,4 +12,8 @@ class TypeProduct extends Authenticatable
 
     protected $table = "type_products";
 
+    public function Product()
+    {
+        return $this->belongsTo('App\Product','parent','id');
+    }
 }

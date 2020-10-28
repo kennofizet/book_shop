@@ -18,7 +18,7 @@
                         <tr>
                             <!-- <td><input type="checkbox" name="checkAll" id="checkAll"></td> -->
                             <td><span class="thead-text">STT</span></td>
-                            <td><span class="thead-text">Tiêu đề</span></td>
+                            <td><span class="thead-text">Tiêu đề/Sản phẩm</span></td>
                             <td><span class="thead-text">Thực trạng</span></td>
                             <td><span class="thead-text">Trạng thái</span></td>
                             <td><span class="thead-text">Người tạo</span></td>
@@ -34,11 +34,11 @@
                             <td><span class="tbody-text">{{$stt}}</h3></span>
                             <td class="clearfix">
                                 <div class="tb-title fl-left">
-                                    <a href="" title="">{{$category_detail->title}}</a>
+                                    <a href="" title="">{{$category_detail->title}}({{$category_detail->Product()->count()}})</a>
                                 </div> 
                                 <ul class="list-operation fl-right">
                                     <li><a href="{{route('admin.product.edit-category',$category_detail->id)}}" title="Sửa" class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a></li>
-                                    <li><a href="" title="Xóa" class="delete"><i class="fa fa-trash" aria-hidden="true"></i></a></li>
+                                    <li><span data-id="{{$category_detail->id}}" title="Xóa" class="delete delete-product-category"><i class="fa fa-trash" aria-hidden="true"></i></span></li>
                                 </ul>
                             </td>
                             <td><span class="tbody-text">
@@ -73,11 +73,11 @@
                                     <td><span class="tbody-text">{{$stt}}</h3></span>
                                     <td class="clearfix">
                                         <div class="tb-title fl-left">
-                                            <a href="" title="">{{$category_child_1->title}}</a>
+                                            <a href="" title="">{{$category_child_1->title}}({{$category_child_1->Product()->count()}})</a>
                                         </div> 
                                         <ul class="list-operation fl-right">
                                             <li><a href="{{route('admin.product.edit-category',$category_child_1->id)}}" title="Sửa" class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a></li>
-                                            <li><a href="" title="Xóa" class="delete"><i class="fa fa-trash" aria-hidden="true"></i></a></li>
+                                            <li><span data-id="{{$category_child_1->id}}" title="Xóa" class="delete delete-product-category"><i class="fa fa-trash" aria-hidden="true"></i></span></li>
                                         </ul>
                                     </td>
                                     <td><span class="tbody-text">
@@ -112,11 +112,11 @@
                                             <td><span class="tbody-text">{{$stt}}</h3></span>
                                             <td class="clearfix">
                                                 <div class="tb-title fl-left">
-                                                    <a href="" title="">{{$category_child_2->title}}</a>
+                                                    <a href="" title="">{{$category_child_2->title}}({{$category_child_2->Product()->count()}})</a>
                                                 </div> 
                                                 <ul class="list-operation fl-right">
                                                     <li><a href="{{route('admin.product.edit-category',$category_child_2->id)}}" title="Sửa" class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a></li>
-                                                    <li><a href="" title="Xóa" class="delete"><i class="fa fa-trash" aria-hidden="true"></i></a></li>
+                                                    <li><span data-id="{{$category_child_2->id}}" title="Xóa" class="delete delete-product-category"><i class="fa fa-trash" aria-hidden="true"></i></span></li>
                                                 </ul>
                                             </td>
                                             <td><span class="tbody-text">
@@ -151,11 +151,11 @@
                                                     <td><span class="tbody-text">{{$stt}}</h3></span>
                                                     <td class="clearfix">
                                                         <div class="tb-title fl-left">
-                                                            <a href="" title="">{{$category_child_3->title}}</a>
+                                                            <a href="" title="">{{$category_child_3->title}}({{$category_child_3->Product()->count()}})</a>
                                                         </div> 
                                                         <ul class="list-operation fl-right">
                                                             <li><a href="{{route('admin.product.edit-category',$category_child_3->id)}}" title="Sửa" class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a></li>
-                                                            <li><a href="" title="Xóa" class="delete"><i class="fa fa-trash" aria-hidden="true"></i></a></li>
+                                                            <li><span data-id="{{$category_child_3->id}}" title="Xóa" class="delete delete-product-category"><i class="fa fa-trash" aria-hidden="true"></i></span></li>
                                                         </ul>
                                                     </td>
                                                     <td><span class="tbody-text">
@@ -190,11 +190,11 @@
                                                             <td><span class="tbody-text">{{$stt}}</h3></span>
                                                             <td class="clearfix">
                                                                 <div class="tb-title fl-left">
-                                                                    <a href="" title="">{{$category_child_4->title}}</a>
+                                                                    <a href="" title="">{{$category_child_4->title}}({{$category_child_4->Product()->count()}})</a>
                                                                 </div> 
                                                                 <ul class="list-operation fl-right">
                                                                     <li><a href="{{route('admin.product.edit-category',$category_child_4->id)}}" title="Sửa" class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a></li>
-                                                                    <li><a href="" title="Xóa" class="delete"><i class="fa fa-trash" aria-hidden="true"></i></a></li>
+                                                                    <li><span data-id="{{$category_child_4->id}}" title="Xóa" class="delete delete-product-category"><i class="fa fa-trash" aria-hidden="true"></i></span></li>
                                                                 </ul>
                                                             </td>
                                                             <td><span class="tbody-text">
@@ -235,7 +235,7 @@
                         <tr>
                             <!-- <td><input type="checkbox" name="checkAll" id="checkAll"></td> -->
                             <td><span class="thead-text">STT</span></td>
-                            <td><span class="thead-text">Tiêu đề</span></td>
+                            <td><span class="thead-text">Tiêu đề/Sản phẩm</span></td>
                             <td><span class="thead-text">Thực trạng</span></td>
                             <td><span class="thead-text">Trạng thái</span></td>
                             <td><span class="thead-text">Người tạo</span></td>
@@ -269,10 +269,95 @@
         </div>
     </div>
 </div>
-    
+<a href="{{route('admin.product.category')}}" id="redirect-link"></a>
 @endsection
 @section('script')
 <script type="text/javascript">
-    body_script("{{url('/')}}/admin/js/main.js");
+function loadScripts(scripts) {
+var deferred = jQuery.Deferred();
+
+function loadScript(i) {
+  if (i < scripts.length) {
+    jQuery.ajax({
+      url: scripts[i],
+      dataType: "script",
+      cache: true,
+      success: function() {
+        loadScript(i + 1);
+      }
+    });
+  } else {
+    deferred.resolve();
+  }
+}
+loadScript(0);
+
+return deferred;
+}
+
+  var d1 = loadScripts([
+
+  ]).done(function() {
+    console.log("All scripts loaded1");
+
+  });
+
+    // queue #2 - jquery cycle2 plugin and tile effect plugin
+    var d2 = loadScripts([
+    ]).done(function() {
+        console.log("All scripts loaded2");
+        $('input[name="checkAll"]').click(function () {
+            var status = $(this).prop('checked');
+            $('.list-table-wp tbody tr td input[type="checkbox"]').prop("checked", status);
+            $('.list-table-wp tbody tr td input[type="checkbox"]').addClass("product-type-list-table-checked");
+        });
+        $('input[name="checkItem"]').click(function () {
+            $(this).toggleClass("product-type-list-table-checked");
+        });
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    });
+
+    // trigger a callback when all queues are complete
+    jQuery.when(d1, d2).done(function() {
+      console.log("All scripts loaded");
+      body_script("{{url('/')}}/admin/js/main.js");
+    });
+    
+</script>
+<script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>
+<script type="text/javascript">
+    $('.delete-product-category').on('click',function (e) {
+        var id = $(this).attr('data-id');
+        $.ajax({
+            url:"{{ route('source.api.admin.product.category.delete') }}",
+            method:"POST",
+            data:{id:id},
+            success:function(data){
+              if (data.message == "success") {
+                  pushNotify("success",1,"Đã xóa!");
+                  $('#redirect-link').click();
+              }else if(data.message == "error"){
+                  pushNotify("error",1,"Có gĩ đó lỗi!");
+              }else{
+                  pushNotify("error",1,"Có gĩ đó lỗi!");
+              }
+            },
+            error: function(jqXhr, json, errorThrown){
+                if (jqXhr['responseJSON']['errors']['id']) {
+                    pushNotify("error",1,"Có gĩ đó lỗi!");
+                };
+            }
+        });
+    });
 </script>
 @endsection

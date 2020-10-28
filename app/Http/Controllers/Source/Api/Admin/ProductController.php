@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Category;
 use App\Product;
+use App\TypeProduct;
 use Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -164,6 +165,10 @@ class ProductController extends Controller
                     if(!Storage::disk('public_upload')->put('source/api/product/thumbnail/'.$random_file_name.".jpg", $crop_file->encode('jpg')->__toString())) {
                         return false;
                     }
+                    $crop_file->resize(700,700);
+                    if(!Storage::disk('public_upload')->put('source/api/product/room-sezi/'.$random_file_name.".jpg", $crop_file->encode('jpg')->__toString())) {
+                        return false;
+                    }
                  
                 }else{
                     return ['message' => 'file_error'];
@@ -174,13 +179,14 @@ class ProductController extends Controller
             $new_post = new Product;
             $new_post->image = $random_file_name.".jpg";
             $new_post->name = $name;
-            $new_post->type = 0;
             $new_post->description = $description;
             $new_post->content = $content;
             $new_post->price = $price;
             $new_post->sale_price = 0;
             $new_post->status_count = 1;
             $new_post->parent = $parent;
+            // UIDID VALID RFC 4211 phiên bản 4 UUID
+            $new_post->type = sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x'.$parent,mt_Rand(0, 0xffff), mt_Rand(0, 0xffff),mt_Rand(0, 0xffff),mt_Rand(0, 0x0fff) | 0x4000,mt_Rand(0, 0x3fff) | 0x8000,mt_Rand(0, 0xffff), mt_Rand(0, 0xffff), mt_Rand(0, 0xffff));
             $new_post->save();
             return ['message' => "success"];
         }
@@ -524,6 +530,25 @@ class ProductController extends Controller
             return ['message' => "success"];
         }
     }
+    public function postProductCategoryDeleteById(Request $request)
+    {
+        $validator  = Validator::make($request->all(), [
+            'id' => 'required',
+        ]);
+        if ($validator ->fails()) {
+            return ["message" => "error"];
+        }else{
+            $id_category = $request->id;
+            try {
+                $category_delete = Category::findOrFail($id_category);
+            } catch (ModelNotFoundException $ex) {
+                return ['message' => "error"];
+            }
+            $category_delete->delete();
+
+            return ['message' => "success"];
+        }
+    }
     public function postEditProduct(Request $request)
     {
         // dd($request);
@@ -620,6 +645,10 @@ class ProductController extends Controller
                             if(!Storage::disk('public_upload')->put('source/api/product/thumbnail/'.$random_file_name.".jpg", $crop_file->encode('jpg')->__toString())) {
                                 return false;
                             }
+                            $crop_file->resize(700,700);
+                            if(!Storage::disk('public_upload')->put('source/api/product/room-sezi/'.$random_file_name.".jpg", $crop_file->encode('jpg')->__toString())) {
+                                return false;
+                            }
                          
                         }else{
                             return ['message' => 'file_error'];
@@ -642,6 +671,10 @@ class ProductController extends Controller
                     if(!Storage::disk('public_upload')->put('source/api/product/thumbnail/'.Str::replaceLast('.jpg','_',$old_file_image_post->image)."relife.jpg", $crop_file->encode('jpg')->__toString())) {
                         return false;
                     }
+                    $crop_file->resize(700,700);
+                    if(!Storage::disk('public_upload')->put('source/api/product/room-sezi/'.$random_file_name.".jpg", $crop_file->encode('jpg')->__toString())) {
+                        return false;
+                    }
                     Storage::disk('public_upload')->delete('source/api/product/images/'.$old_file_image_post->image);
                     // dùng ảnh cũ nhưng cắt ảnh mới
                     $update_post->image = Str::replaceLast('.jpg','_',$old_file_image_post->image)."relife.jpg";
@@ -651,6 +684,145 @@ class ProductController extends Controller
             }
 
             $update_post->update();
+            return ['message' => "success"];
+        }
+    }
+    public function postProductTypeCreate(Request $request)
+    {
+        $validator  = Validator::make($request->all(), [
+            'name' => 'required',
+            'description' => 'required',
+            'file' => 'required',
+            'seri' => 'required',
+            'style_file_x' => 'required',
+            'style_file_y' => 'required',
+            'style_file_w' => 'required',
+            'style_file_h' => 'required'
+        ]);
+        if ($validator ->fails()) {
+            if($request->ajax())
+            {
+                return response()->json(array(
+                    'success' => false,
+                    'message' => 'There are incorect values in the form!',
+                    'errors' => $validator->getMessageBag()->toArray()
+                ), 422);
+            }
+
+            $this->throwValidationException(
+
+                $request, $validator
+
+            );
+        }else{
+            $image_x = floor($request->style_file_x);
+            $image_y = floor($request->style_file_y);
+            $image_w = floor($request->style_file_w);
+            $image_h = floor($request->style_file_h);
+
+            $name = $request->name;
+            $description = $request->description;
+            $seri = $request->seri;
+            try {
+                $code_parent = Product::where('type',$seri)->firstOrFail();
+            } catch (ModelNotFoundException $ex) {
+                return ['message' => "code_fail"];
+            }
+
+             if ($request->hasFile('file')) {
+                $file = $request->file;
+                $file_extension = $file->getClientOriginalExtension(); 
+                if($file_extension == 'png' or $file_extension == 'jpg' or $file_extension == 'jpeg' or $file_extension == 'PNG' or $file_extension == 'JPG' or $file_extension == 'JPEG'){
+                    $file_name_old = $file->getClientOriginalName();
+                    $file_name = Str::of($file_name_old)->replace(' ', '_')->replace("'", '_')->replace('.', '_')->replace('(', '')->replace(')', '');
+                    $random_file_name = time().Str::random(20).'_'.$file_name;
+                    while(file_exists('upload/source/api/product/type/images/'.$random_file_name))
+                    {
+                        $random_file_name = time().Str::random(20).'_'.$file_name;
+                    }
+                    $crop_file = Image::make($file);
+                    if(!Storage::disk('public_upload')->put('source/api/product/type/images/'.$random_file_name.".jpg", $crop_file->encode('jpg')->__toString())) {
+                        return false;
+                    }
+                    $crop_file->crop($image_w, $image_h, $image_x, $image_y);
+                    $crop_file->resize(350,350);
+                    if(!Storage::disk('public_upload')->put('source/api/product/type/thumbnail/'.$random_file_name.".jpg", $crop_file->encode('jpg')->__toString())) {
+                        return false;
+                    }
+                    $crop_file->resize(700,700);
+                    if(!Storage::disk('public_upload')->put('source/api/product/type/room-sezi/'.$random_file_name.".jpg", $crop_file->encode('jpg')->__toString())) {
+                        return false;
+                    }
+                 
+                }else{
+                    return ['message' => 'file_error'];
+                };
+
+            }
+
+            $new_post = new TypeProduct;
+            $new_post->image = $random_file_name.".jpg";
+            $new_post->name = $name;
+            $new_post->parent = $code_parent->id;
+            $new_post->description = $description;
+            $new_post->save();
+            return ['message' => "success"];
+        }
+    }
+    public function postProductTypeDeleteById(Request $request)
+    {
+        $validator  = Validator::make($request->all(), [
+            'id' => 'required'
+        ]);
+        if ($validator ->fails()) {
+            if($request->ajax())
+            {
+                return response()->json(array(
+                    'success' => false,
+                    'message' => 'There are incorect values in the form!',
+                    'errors' => $validator->getMessageBag()->toArray()
+                ), 422);
+            }
+
+            $this->throwValidationException(
+
+                $request, $validator
+
+            );
+        }else{
+            $id = $request->id;
+            try {
+                $product_type_delete = TypeProduct::findOrFail($id);
+            } catch (ModelNotFoundException $ex) {
+                return ['message' => "fail"];
+            }
+            $product_type_delete->delete();
+
+            return ['message' => "success"];
+        }
+    }
+    public function postSettingTypeDataPageProduct(Request $request)
+    {
+        $validator  = Validator::make($request->all(), [
+            'number' => 'required',
+        ]);
+        if ($validator ->fails()) {
+            return ["message" => "validator"];
+        }else{
+            $number = $request->number;
+            if ($number == "default") {
+                $new_number = 2;
+            }elseif($number == "all"){
+                $count_all_data = Product::all()->count();
+                $new_number = $count_all_data;
+            }elseif(intval($number) > 0){
+                $new_number = $number;
+            }else{
+                return ['message' => "error"];
+            }
+            $redis = Redis::connection();
+            $redis->set('source.api.admin.product.type.setting-count-data-page-product-type',$new_number);
+
             return ['message' => "success"];
         }
     }

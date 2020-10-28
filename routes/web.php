@@ -16,6 +16,9 @@ Route::get('/about','HomeController@getAbout')->name('about');
 Route::get('/category/{slug_category}','HomeController@getListProductByCategory')->name('product-by-category');
 Route::get('/product/detail/{id}','HomeController@getProductDetail')->name('product-detail');
 // cart 
+Route::get('/search/{key}','HomeController@getSearch')->name('search');
+Route::post('/search-pro-post','HomeController@postSearch')->name('search-pro-post');
+
 Route::get('/cart','HomeController@getCart')->name('cart');
 Route::get('/checkout','HomeController@getCheckOut')->name('cart-check-out');
 // blog
@@ -62,6 +65,22 @@ Route::post('reset-password', 'LoginController@sendResetPassword')
 Route::group(['middleware' => 'adminOnly','namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin_slug'], function()  
 {  
 	Route::get('/','AdminController@index')->name('home');
+	Route::group(['as' => 'my-account.', 'prefix' => 'my-account'], function()  
+	{ 
+		Route::get('/','AccountController@myAcccount')->name('info');
+		Route::get('/change-password','AccountController@myAcccountChangePassword')->name('change-password');
+	});
+	Route::group(['as' => 'account.', 'prefix' => 'account'], function()  
+	{ 
+		Route::get('/','AccountController@listAccount')->name('list');
+		Route::get('/active','AccountController@listAccountActive')->name('list-active');
+		Route::get('/wait','AccountController@listAccountWait')->name('list-wait');
+		Route::post('/search','AccountController@postSearchAccount')->name('search');
+		Route::get('/search',function (){
+			return redirect(route('admin.product.list'));
+		});
+	});
+	
 	Route::get('/404-page','AdminController@notFound')->name('notfound');
 	Route::group(['as' => 'blog.', 'prefix' => 'blog'], function()  
 	{
@@ -90,12 +109,28 @@ Route::group(['middleware' => 'adminOnly','namespace' => 'Admin', 'as' => 'admin
 		{
 			Route::get('/list','ProductController@getProductTypeList')->name('list');
 			Route::get('/create','ProductController@getProductTypeCreate')->name('create');
+			Route::post('/search','ProductController@postSearchProductType')->name('search');
+			Route::get('/search',function (){
+				return redirect(route('admin.product.type.list'));
+			});
 		});
 	});
 	Route::group(['as' => 'cart.', 'prefix' => 'cart'], function()  
 	{
 		Route::get('/list','CartController@getCartList')->name('list');
+		Route::get('/list/{id}','CartController@getCartListDetail')->name('list-detail');
 		Route::get('/list-customer','CartController@getCartListCustomer')->name('list-customer');
+		Route::get('/list-customer/{id}','CartController@getCartCustomerById')->name('customer-by-id');
+
+		Route::post('/search-customer','CartController@postSearchCartCustomer')->name('search-customer');
+		Route::get('/search-customer',function (){
+			return redirect(route('admin.cart.list-customer'));
+		});
+
+		Route::post('/search','CartController@postSearchCart')->name('search');
+		Route::get('/search',function (){
+			return redirect(route('admin.cart.list-customer'));
+		});
 	});
 	Route::group(['as' => 'setting.', 'prefix' => 'setting'], function()  
 	{
@@ -133,6 +168,17 @@ Route::group(['middleware' => 'adminOnly','namespace' => 'Admin', 'as' => 'admin
 // route post admin
 Route::group(['middleware' => 'adminOnly','namespace' => 'Source\Api\Admin', 'as' => 'source.api.admin.', 'prefix' => 'source/api/admin'], function()  
 {
+	Route::group(['as' => 'account.', 'prefix' => 'account'], function()  
+	{
+		Route::group(['as' => 'my-account.', 'prefix' => 'my-account'], function()  
+		{
+			Route::post('/update','AccountController@postUpdateMyAccount')->name('update');
+			Route::post('/change-password','AccountController@postChangePasswordMyAccount')->name('change-password');
+		});
+		Route::post('/lock','AccountController@postLockAccount')->name('lock');
+		Route::post('/unlock','AccountController@postUnLockAccount')->name('unlock');
+		Route::post('/delete','AccountController@postDeleteAccount')->name('delete');
+	});
 	Route::group(['as' => 'setting.', 'prefix' => 'setting'], function()  
 	{
 		Route::group(['as' => 'template.', 'prefix' => 'template'], function()  
@@ -149,6 +195,10 @@ Route::group(['middleware' => 'adminOnly','namespace' => 'Source\Api\Admin', 'as
 		Route::post('/delete','BlogController@postDeletePost')->name('delete-post');
 		Route::post('/edit','BlogController@postEditPost')->name('edit-post');
 	});
+	Route::group(['as' => 'cart.', 'prefix' => 'cart'], function()  
+	{
+		Route::post('/update-bill-status','CartController@postUpdateBillStatusCart')->name('update-bill-status');
+	});
 	Route::group(['as' => 'product.', 'prefix' => 'product'], function()  
 	{
 		Route::post('/create','ProductController@postCreateProduct')->name('create');
@@ -159,6 +209,7 @@ Route::group(['middleware' => 'adminOnly','namespace' => 'Source\Api\Admin', 'as
 		Route::group(['as' => 'category.', 'prefix' => 'category'], function()  
 		{
 			Route::post('/create','ProductController@postCreateProductCategory')->name('create');
+			Route::post('/delete','ProductController@postProductCategoryDeleteById')->name('delete');
 			Route::post('/edit','ProductController@postEditProductCategory')->name('edit');
 		});
 		Route::group(['as' => 'sale.', 'prefix' => 'sale'], function()  
@@ -171,6 +222,12 @@ Route::group(['middleware' => 'adminOnly','namespace' => 'Source\Api\Admin', 'as
 			Route::post('/non','ProductController@postNonProductStore')->name('non');
 			Route::post('/has','ProductController@postHasProductStore')->name('has');
 		});
+		Route::group(['as' => 'type.', 'prefix' => 'type'], function()  
+		{
+			Route::post('/create','ProductController@postProductTypeCreate')->name('create');
+			Route::post('/delete','ProductController@postProductTypeDeleteById')->name('delete');
+			Route::post('/setting-count-data-page-product-type','ProductController@postSettingTypeDataPageProduct')->name('setting-count-data-page-product-type');
+		});
 	});
 });
 Route::group(['middleware' => 'userCli','namespace' => 'Source\Api', 'as' => 'source.api.user.', 'prefix' => 'source/api/user'], function()  
@@ -182,5 +239,25 @@ Route::group(['middleware' => 'userCli','namespace' => 'Source\Api', 'as' => 'so
 	Route::group(['as' => 'blog.', 'prefix' => 'blog'], function()  
 	{
 		Route::post('/like-post','BlogController@postLikePost')->name('like-post');
+	});
+	Route::group(['as' => 'product.', 'prefix' => 'product'], function()  
+	{
+		Route::post('/sort-product-category','ProductController@postSortProductCategory')->name('sort-product-category');
+	});
+});
+Route::group(['namespace' => 'Source\Api', 'as' => 'source.api.user.', 'prefix' => 'source/api/user'], function()  
+{
+	Route::group(['as' => 'product.', 'prefix' => 'product'], function()  
+	{
+		Route::post('/sort-price-product-category','ProductController@postSortPriceProductCategory')->name('sort-price-product-category');
+	});
+	Route::group(['as' => 'cart.', 'prefix' => 'cart'], function()  
+	{
+		Route::post('/cart-check-out','CartController@postCartCheckOut')->name('cart-check-out');
+		Route::post('/add-to-cart','CartController@postAddtoCart')->name('add-to-cart');
+		Route::post('/add-to-cart-multi','CartController@postAddtoCartMulti')->name('add-to-cart-multi');
+		Route::post('/update-to-cart-single','CartController@postUpdateToCartSingle')->name('update-to-cart-single');
+		Route::post('/delete-cart-item','CartController@postDeleteCartItem')->name('delete-cart-item');
+		Route::post('/count-item-cart','CartController@postCountItemCart')->name('count-item-cart');
 	});
 });

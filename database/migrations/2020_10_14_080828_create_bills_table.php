@@ -18,8 +18,10 @@ class CreateBillsTable extends Migration
             $table->integer('id_customer');
             $table->string('date',255);
             $table->integer('total');
+            $table->integer('status');
             $table->string('payment',255);
-            $table->string('note',255);
+            $table->string('code',255);
+            $table->longText('note')->nullable();
             $table->timestamps();
         });
     }

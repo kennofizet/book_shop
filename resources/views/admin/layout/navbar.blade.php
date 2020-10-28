@@ -2,20 +2,6 @@
     <ul id="sidebar-menu">
         <li class="nav-item">
             <a href="" title="" class="nav-link nav-toggle">
-                <span class="fa fa-map icon"></span>
-                <span class="title">Trang</span>
-            </a>
-            <ul class="sub-menu">
-                <li class="nav-item">
-                    <a href="?page=add_page" title="" class="nav-link">Thêm mới</a>
-                </li>
-                <li class="nav-item">
-                    <a href="?page=list_page" title="" class="nav-link">Danh sách các trang</a>
-                </li>
-            </ul>
-        </li>
-        <li class="nav-item">
-            <a href="" title="" class="nav-link nav-toggle">
                 <span class="fa fa-pencil-square-o icon"></span>
                 <span class="title">Bài viết</span>
             </a>
@@ -48,23 +34,6 @@
                 </li>
             </ul>
         </li>
-        <!-- <li class="nav-item">
-            <a href="#" title="" class="nav-link nav-toggle">
-                <span class="fa fa-cubes icon"></span>
-                <span class="title">Danh mục sản phẩm</span>
-            </a>
-            <ul class="sub-menu">
-                <li class="nav-item">
-                    <a href="?page=add_widget" title="" class="nav-link">Thêm mới</a>
-                </li>
-                <li class="nav-item">
-                    <a href="?page=list_widget" title="" class="nav-link">Danh sách khối</a>
-                </li>
-                <li class="nav-item">
-                    <a href="?page=menu" title="" class="nav-link">Menu</a>
-                </li>
-            </ul>
-        </li> -->
         <li class="nav-item">
             <a href="" title="" class="nav-link nav-toggle">
                 <span class="fa fa-database icon"></span>
@@ -86,7 +55,18 @@
             </a>
             <ul class="sub-menu">
                 <li class="nav-item">
-                    <a href="{{route('admin.setting.template.login')}}" title="Setting Page Login" class="nav-link">Login page</a>
+                    <a href="{{route('admin.setting.template.login')}}" title="Setting Page Login" class="nav-link">Trang đăng nhập</a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a href="#" title="" class="nav-link nav-toggle">
+                <i class="fa fa-user" aria-hidden="true"></i>
+                <span class="title">Tài khoản</span>
+            </a>
+            <ul class="sub-menu">
+                <li class="nav-item">
+                    <a href="{{route('admin.account.list')}}" title="List Account" class="nav-link">Danh Sách tài khoản</a>
                 </li>
             </ul>
         </li>

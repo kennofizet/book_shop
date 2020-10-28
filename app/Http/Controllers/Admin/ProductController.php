@@ -16,10 +16,20 @@ class ProductController extends Controller
     public function postSearchProduct(Request $request)
     {
         $key = $request->key;
-        $list_product = Product::orderBy('id','DESC')->where('name', 'like', '%' . $key . '%')->orWhere('description', 'like', '%' . $key . '%')->orWhere('content', 'like', '%' . $key . '%')->orWhere('price', 'like', '%' . $key . '%')->orWhere('sale_price', 'like', '%' . $key . '%')->get();
+        $list_product = Product::orderBy('id','DESC')->where('name', 'like', '%' . $key . '%')->orWhere('description', 'like', '%' . $key . '%')->orWhere('content', 'like', '%' . $key . '%')->orWhere('price', 'like', '%' . $key . '%')->orWhere('sale_price', 'like', '%' . $key . '%')->paginate(10);
         // dd($key);
         if ($request->ajax()) {
             $view = view('admin.product.list-search',compact('list_product'))->render();
+            return response()->json(['html'=>$view]);
+        }
+    }
+    public function postSearchProductType(Request $request)
+    {
+        $key = $request->key;
+        $list_type = TypeProduct::orderBy('id','DESC')->where('name', 'like', '%' . $key . '%')->orWhere('description', 'like', '%' . $key . '%')->paginate(10);
+        // dd($key);
+        if ($request->ajax()) {
+            $view = view('admin.product.list-type-search',compact('list_type'))->render();
             return response()->json(['html'=>$view]);
         }
     }
@@ -158,8 +168,17 @@ class ProductController extends Controller
     }
     public function getProductTypeList()
     {
-        $list_type = TypeProduct::all();
-        return view('admin.product.list-type-product',['list_type' => $list_type]);
+        $redis = Redis::connection();
+        $count_rows_data_setting = $redis->get('source.api.admin.product.type.setting-count-data-page-product-type');
+        if (!empty($count_rows_data_setting)) {
+            $count_rows_data_setting_new = $count_rows_data_setting;
+        }else{
+            $count_rows_data_setting_new = 5;
+        }
+
+        $list_type = TypeProduct::orderBy('id','DESC')->paginate($count_rows_data_setting_new);
+        $count_all = TypeProduct::all()->count();
+        return view('admin.product.list-type-product',['list_type' => $list_type,'count_rows_data_setting_new' => $count_rows_data_setting_new,'count_all' => $count_all]);
     }
     public function getProductTypeCreate()
     {

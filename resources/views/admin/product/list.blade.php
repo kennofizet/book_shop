@@ -95,6 +95,7 @@
                             <td><span class="thead-text">Sale</span></td>
                             <td><span class="thead-text">Danh mục</span></td>
                             <td><span class="thead-text">Trạng thái</span></td>
+                            <td><span class="thead-text">Mã hàng</span></td>
                             <td><span class="thead-text">Thời gian</span></td>
                         </tr>
                     </thead>
@@ -134,6 +135,7 @@
                                 0
                                 @endif
                                 " data-id="{{$detail_product->id}}"><i class="fa fa-pencil" aria-hidden="true"></i></span></span></td>
+                            <td><span class="tbody-text">{{$detail_product->type}}</span></td>
                             <td><span class="tbody-text">{{$detail_product->created_at}}</span></td>
                         </tr>
                         @endforeach
@@ -148,6 +150,7 @@
                             <td><span class="tfoot-text">Sale</span></td>
                             <td><span class="tfoot-text">Danh mục</span></td>
                             <td><span class="tfoot-text">Trạng thái</span></td>
+                            <td><span class="thead-text">Mã hàng</span></td>
                             <td><span class="tfoot-text">Thời gian</span></td>
                         </tr>
                     </tfoot>
